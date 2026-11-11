@@ -1,0 +1,23 @@
+{
+  "name": "tenzin-palgyal-portfolio",
+  "version": "1.0.0",
+  "description": "Developer Portfolio of Tenzin Palgyal — Full Stack Developer & IT Engineer at Department of Home (CTA)",
+  "main": "server.cjs",
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node server.cjs",
+    "serve": "node server.cjs",
+    "preview": "node server.cjs"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "react",
+    "laravel",
+    "postgresql",
+    "cta",
+    "tibet"
+  ],
+  "author": "Tenzin Palgyal <tenzin7755@gmail.com>",
+  "license": "MIT"
+}
