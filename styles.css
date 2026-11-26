@@ -379,7 +379,7 @@ body {
 .nav-brand-logo {
   width: 30px;
   height: 30px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   background-color: var(--bg-deep);
   border: 1px solid var(--accent-gold-border);
   display: flex;
@@ -677,52 +677,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* Mandatory B11 Tagline Reveal Section */
-.tagline-reveal-section {
-  padding-top: var(--space-900);
-  padding-bottom: var(--space-900);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
-  margin-bottom: var(--space-800);
-  background-color: var(--bg-deep);
-  border-radius: var(--radius-3xl);
-  padding-left: var(--space-500);
-  padding-right: var(--space-500);
-}
 
-.tagline-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-50);
-  color: var(--accent-gold);
-  font-size: 12px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-300);
-}
-
-.tagline-paragraph {
-  max-width: 680px;
-  font-size: 32px;
-  line-height: 44px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-/* Individual words start at 28% opacity, transitioning to 100% on scroll */
-.tagline-word {
-  opacity: 0.28;
-  color: var(--text-primary);
-  transition: opacity 600ms var(--ease-base), color 600ms var(--ease-base);
-  display: inline-block;
-  margin-right: 0.22em;
-}
-
-.tagline-word.revealed {
-  opacity: 1;
-  color: #FFFFFF;
-}
 
 /* Section Header Structure */
 .section-header {
@@ -871,272 +826,6 @@ body {
   justify-content: space-between;
   padding-top: var(--space-200);
   border-top: 1px solid var(--border-subtle);
-}
-
-/* Interactive Tibetan Typing Tutor Experience (Live Interactive Feature) */
-.typing-experience-section {
-  background-color: var(--bg-surface-1);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-3xl);
-  padding: var(--space-400);
-  margin-bottom: var(--space-900);
-  position: relative;
-}
-
-.typing-tutor-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-300);
-}
-
-.tutor-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-200);
-}
-
-.tutor-display-area {
-  background-color: var(--bg-canvas);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-xl);
-  padding: var(--space-300);
-  min-height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  outline: none;
-  transition: border-color var(--duration-shift) var(--ease-base);
-}
-
-.tutor-display-area:focus {
-  border-color: var(--accent-gold-border);
-}
-
-.tutor-display-text {
-  font-family: var(--font-tibetan);
-  font-size: 36px;
-  line-height: 48px;
-  color: var(--text-primary);
-  word-break: break-word;
-  white-space: pre-wrap;
-}
-
-.tutor-display-empty {
-  color: var(--text-muted);
-  font-size: 15px;
-  font-family: var(--font-main);
-  display: flex;
-  align-items: center;
-  gap: var(--space-100);
-}
-
-.tutor-live-feedback {
-  position: absolute;
-  top: var(--space-100);
-  right: var(--space-200);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent-cyan);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-75);
-}
-
-.tutor-layer-pill {
-  color: var(--accent-gold);
-  background-color: var(--accent-gold-soft);
-  border: 1px solid var(--accent-gold-border);
-  border-radius: var(--radius-full);
-  padding: 1px 8px;
-  font-size: 10px;
-  letter-spacing: 0.04em;
-}
-
-.tibetan-keyboard-matrix {
-  width: 100%;
-  overflow-x: auto;
-  padding-bottom: var(--space-25);
-}
-
-.keyboard-rows-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-  min-width: 680px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.keyboard-row {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  flex-wrap: nowrap;
-  width: 100%;
-}
-
-.t-key {
-  background-color: var(--bg-surface-2);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-md);
-  padding: 5px 6px;
-  flex: 1;
-  min-width: 40px;
-  max-width: 58px;
-  height: 54px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  transition: transform 120ms var(--ease-base),
-              background-color 150ms var(--ease-base),
-              border-color 150ms var(--ease-base);
-}
-
-.t-key:hover {
-  background-color: var(--bg-surface-3);
-  border-color: var(--border-strong);
-  transform: translateY(-1px);
-}
-
-.t-key:active, .t-key.pressed {
-  background-color: var(--text-primary);
-  color: var(--bg-canvas);
-  transform: scale(0.95) translateY(1px);
-}
-
-.t-key:active .t-glyph, .t-key.pressed .t-glyph {
-  color: var(--bg-canvas);
-}
-
-.t-key:active .t-latin, .t-key.pressed .t-latin {
-  color: #333333;
-}
-
-.t-glyph {
-  font-family: var(--font-tibetan);
-  font-size: 20px;
-  line-height: 24px;
-  color: var(--text-primary);
-  margin-top: auto;
-  margin-bottom: 1px;
-}
-
-.t-key.is-combining .t-glyph {
-  color: var(--accent-gold);
-}
-
-.t-key.is-dead-key .t-glyph {
-  color: var(--text-muted);
-  font-size: 17px;
-}
-
-.t-latin {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  line-height: 11px;
-  color: var(--text-secondary);
-  font-weight: 600;
-  align-self: flex-start;
-}
-
-.t-key.special {
-  background-color: var(--bg-surface-3);
-  justify-content: center;
-  align-items: center;
-  color: var(--text-secondary);
-  font-family: var(--font-main);
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.t-key.key-tab,
-.t-key.key-caps {
-  flex: 1.45;
-  min-width: 56px;
-  max-width: 84px;
-}
-
-.t-key.key-backspace,
-.t-key.key-enter {
-  flex: 1.65;
-  min-width: 64px;
-  max-width: 96px;
-}
-
-.t-key.key-shift {
-  flex: 2.15;
-  min-width: 78px;
-  max-width: 122px;
-}
-
-.t-key.key-space {
-  flex: none;
-  width: 340px;
-  max-width: 60%;
-  background-color: var(--bg-surface-2);
-  justify-content: space-between;
-  align-items: center;
-}
-
-.t-key.key-space .t-glyph {
-  font-size: 16px;
-  color: var(--text-secondary);
-}
-
-.t-key.shift-active,
-.t-key.dead-key-active {
-  background-color: var(--accent-gold-soft);
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
-}
-
-.t-key.shift-active .t-glyph,
-.t-key.dead-key-active .t-glyph {
-  color: var(--accent-gold);
-}
-
-.tutor-helper-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-100);
-  font-size: 13px;
-  color: var(--text-secondary);
-  padding-top: var(--space-200);
-  border-top: 1px solid var(--border-subtle);
-}
-
-.sample-phrases {
-  display: flex;
-  align-items: center;
-  gap: var(--space-75);
-  flex-wrap: wrap;
-}
-
-.sample-btn {
-  font-family: var(--font-tibetan);
-  font-size: 14px;
-  padding: var(--space-25) var(--space-100);
-  border-radius: var(--radius-full);
-  background-color: var(--bg-surface-2);
-  border: 1px solid var(--border-medium);
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background-color var(--duration-shift) var(--ease-base);
-}
-
-.sample-btn:hover {
-  background-color: var(--bg-surface-3);
 }
 
 /* Architecture & Tech Matrix */
@@ -1540,15 +1229,7 @@ body {
     line-height: 36px;
   }
 
-  .tagline-paragraph {
-    font-size: 22px;
-    line-height: 32px;
-  }
 
-  .tagline-reveal-section {
-    padding-left: var(--space-300);
-    padding-right: var(--space-300);
-  }
 
   .nav-links {
     display: none;
@@ -1573,24 +1254,7 @@ body {
     width: 100%;
   }
 
-  .typing-experience-section {
-    padding: var(--space-250);
-  }
 
-  .keyboard-rows-wrap {
-    min-width: 640px;
-  }
-
-  .t-key {
-    min-width: 34px;
-    height: 48px;
-    padding: 3px 4px;
-  }
-
-  .t-glyph {
-    font-size: 17px;
-    line-height: 20px;
-  }
 }
 
 /* Project Category Filter Bar */
@@ -2051,10 +1715,7 @@ body {
     scroll-behavior: auto !important;
   }
 
-  .tagline-word {
-    opacity: 1 !important;
-    color: #FFFFFF !important;
-  }
+
 }
 
 /* Print Stylesheet for PDF / CV Export */
@@ -2069,7 +1730,6 @@ body {
   .toast-notice,
   .cmd-palette-overlay,
   .skip-link,
-  #tutor-audio-toggle,
   .modal-overlay {
     display: none !important;
   }
@@ -2085,9 +1745,6 @@ body {
     page-break-inside: avoid;
   }
 
-  .tagline-word {
-    opacity: 1 !important;
-    color: #000000 !important;
-  }
+
 }
 
