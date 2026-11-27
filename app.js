@@ -211,6 +211,50 @@
           <text x="574" y="62" fill="#9B9B9B" font-size="9" font-family="sans-serif" text-anchor="middle">Display</text>
         </svg>`
     },
+    'minidock': {
+      title: 'MINIDOCK — The Native Liquid-Glass macOS Auxiliary Dock',
+      institution: 'Independent Systems & Developer Tooling Architecture',
+      role: 'Creator, Systems Engineer & UI Architect',
+      stack: ['Swift 6.2', 'AppKit', 'ScreenCaptureKit', 'Mach Kernel APIs', 'Metal', 'CoreAudio'],
+      status: 'Active Production / Public Beta',
+      liveUrl: 'https://dock-website-one.vercel.app/',
+      description: 'A modular, high-performance floating auxiliary dock built natively for macOS in 100% Swift 6 and AppKit. Designed as a lean, zero-Electron companion to the native macOS Dock with 16+ live widgets, real-time Mach processor telemetry, live ScreenCaptureKit window previews, and an ultra-low under-25MB memory footprint.',
+      details: [
+        '100% Native Swift 6 & AppKit architecture eliminating the 400MB+ Chromium/Electron runtime overhead.',
+        'Per-core Mach kernel telemetry with real-time CPU thread utilization, microsecond timestamping, and memory pressure monitoring.',
+        'ScreenCaptureKit integration for latency-free live thumbnail peeks into active application windows.',
+        'Modular 16+ live widget matrix including month progress dot-matrix, audio waveform meters, battery telemetry, clipboard guard, and quick system controls.',
+        'Refractive Liquid Glass visual design conforming strictly to Apple Human Interface Guidelines.'
+      ],
+      metrics: '< 25MB RAM Footprint · 0.2% CPU Idle · Zero Electron Overhead · 16+ Live Widgets',
+      blueprint: `
+        <svg viewBox="0 0 620 100" width="100%" height="90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="25" width="130" height="50" rx="8" fill="#1F1F1F" stroke="#313131"/>
+          <text x="75" y="47" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle">Mach Kernel APIs</text>
+          <text x="75" y="62" fill="#9B9B9B" font-size="9" font-family="sans-serif" text-anchor="middle">host_processor_info</text>
+
+          <path d="M140 50 H180" stroke="#38BDF8" stroke-width="2"/>
+          <polygon points="180,47 186,50 180,53" fill="#38BDF8"/>
+
+          <rect x="186" y="25" width="140" height="50" rx="8" fill="#1F1F1F" stroke="#313131"/>
+          <text x="256" y="47" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle">Swift 6 Concurrency</text>
+          <text x="256" y="62" fill="#38BDF8" font-size="9" font-family="sans-serif" text-anchor="middle">Actors &amp; Async Streams</text>
+
+          <path d="M326 50 H366" stroke="#38BDF8" stroke-width="2"/>
+          <polygon points="366,47 372,50 366,53" fill="#38BDF8"/>
+
+          <rect x="372" y="25" width="130" height="50" rx="8" fill="#1F1F1F" stroke="#313131"/>
+          <text x="437" y="47" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle">ScreenCaptureKit</text>
+          <text x="437" y="62" fill="#9B9B9B" font-size="9" font-family="sans-serif" text-anchor="middle">Zero-Copy Window Peeks</text>
+
+          <path d="M502 50 H538" stroke="#D4AF37" stroke-width="2"/>
+          <polygon points="538,47 544,50 538,53" fill="#D4AF37"/>
+
+          <rect x="544" y="25" width="66" height="50" rx="8" fill="#131209" stroke="#D4AF37"/>
+          <text x="577" y="47" fill="#D4AF37" font-size="11" font-family="monospace" text-anchor="middle">AppKit</text>
+          <text x="577" y="62" fill="#9B9B9B" font-size="9" font-family="sans-serif" text-anchor="middle">Liquid Glass</text>
+        </svg>`
+    },
     'digital-archive': {
       title: 'The Tibetan Digital Archive System',
       institution: 'Department of Home / Tibetan Cultural Preservation',
@@ -421,6 +465,7 @@
         else if (action === 'github') window.open('https://github.com/tenzin67', '_blank');
         else if (action === 'linkedin') window.open('https://www.linkedin.com/in/tenzin-palgyal/', '_blank');
         else if (action === 'app') window.open('https://tibetankeyboard.vercel.app/', '_blank');
+        else if (action === 'minidock') window.open('https://dock-website-one.vercel.app/', '_blank');
         else if (action === 'ctrc') window.open('https://centraltibetanreliefcommittee.net/', '_blank');
         else if (action === 'nangsi') {
           if (window.openNangsiModal) window.openNangsiModal();

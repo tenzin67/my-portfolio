@@ -649,7 +649,7 @@ body {
 .proof-strip {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: var(--space-200);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-2xl);
@@ -765,6 +765,12 @@ body {
 
 .project-title {
   margin-bottom: var(--space-75);
+}
+
+@media (min-width: 1025px) {
+  .project-card.project-card-wide {
+    grid-column: 1 / -1;
+  }
 }
 
 .project-excerpt {

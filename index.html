@@ -186,6 +186,10 @@
           <div class="proof-label">Interactive Script Literacy Tutor</div>
         </div>
         <div class="proof-card">
+          <div class="proof-value">MINIDOCK · macOS</div>
+          <div class="proof-label">Native Swift 6 Liquid Glass Dock</div>
+        </div>
+        <div class="proof-card">
           <div class="proof-value">Digital Archive</div>
           <div class="proof-label">2026 Historical Preservation Build</div>
         </div>
@@ -211,9 +215,10 @@
 
       <!-- Project Category Filter Bar -->
       <div class="filter-bar" role="tablist" aria-label="Project Categories">
-        <button type="button" class="filter-btn active" data-filter="all">All Projects (4)</button>
+        <button type="button" class="filter-btn active" data-filter="all">All Projects (5)</button>
         <button type="button" class="filter-btn" data-filter="civic">Civic &amp; Institutional</button>
         <button type="button" class="filter-btn" data-filter="linguistic">Linguistic Tools</button>
+        <button type="button" class="filter-btn" data-filter="systems">macOS &amp; Systems</button>
         <button type="button" class="filter-btn" data-filter="archive">Digital Preservation</button>
       </div>
 
@@ -393,8 +398,67 @@
           </div>
         </article>
 
-        <!-- PROJECT 4: Currently Building Archive -->
-        <article class="project-card" data-category="archive" aria-labelledby="proj-arch-title">
+        <!-- PROJECT 4: MINIDOCK — Native Liquid-Glass macOS Auxiliary Dock -->
+        <article class="project-card" data-category="systems" aria-labelledby="proj-minidock-title">
+          <div>
+            <div class="project-badge-row">
+              <span class="project-status-pill featured">Native macOS Systems</span>
+              <a href="https://dock-website-one.vercel.app/" target="_blank" rel="noopener noreferrer" class="caption-4 font-mono" style="color:var(--accent-gold); text-decoration:none;">
+                dock-website-one.vercel.app ↗
+              </a>
+            </div>
+
+            <h3 id="proj-minidock-title" class="heading-5 project-title">
+              MINIDOCK — Native Liquid-Glass macOS Auxiliary Dock
+            </h3>
+
+            <p class="project-excerpt">
+              A modular, floating auxiliary dock engineered for macOS in 100% native Swift 6 and AppKit. Features 16+ live widgets, per-core Mach kernel telemetry, ScreenCaptureKit live window previews, audio waveforms, and an ultra-lean sub-25MB memory footprint with zero Electron overhead.
+            </p>
+
+            <!-- Nested Frame per B3 formula: 24px - 16px = 8px -->
+            <div class="project-meta-box">
+              <div class="meta-row">
+                <span class="meta-key">ENGINEERING</span>
+                <span class="meta-val">100% Native Swift 6.2 · AppKit · Metal</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-key">EFFICIENCY</span>
+                <span class="meta-val">&lt; 25MB RAM · 0.2% CPU Idle · Zero Electron</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-key">SYSTEM APIS</span>
+                <span class="meta-val">Mach Kernel · ScreenCaptureKit · CoreAudio</span>
+              </div>
+            </div>
+
+            <div class="project-tags">
+              <span class="project-tag">Swift 6.2</span>
+              <span class="project-tag">AppKit</span>
+              <span class="project-tag">ScreenCaptureKit</span>
+              <span class="project-tag">Mach Kernel</span>
+              <span class="project-tag">Liquid Glass UI</span>
+              <span class="project-tag">macOS Systems</span>
+            </div>
+          </div>
+
+          <div class="project-footer-actions">
+            <div style="display:flex; gap:var(--space-75); align-items:center;">
+              <a href="https://dock-website-one.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm button-sm" style="background-color:var(--accent-gold); color:var(--bg-canvas); border-color:var(--accent-gold);">
+                Launch App
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm button-sm" data-open-modal="minidock">Dossier</button>
+          </div>
+        </article>
+
+        <!-- PROJECT 5: Currently Building Archive -->
+        <article class="project-card project-card-wide" data-category="archive" aria-labelledby="proj-arch-title">
           <div>
             <div class="project-badge-row">
               <span class="project-status-pill active-build">Currently Building (2026)</span>
@@ -1047,6 +1111,13 @@
           <div class="cmd-item-left">
             <span>🚀</span>
             <span>Launch Tibetan Keyboard (Vercel App)</span>
+          </div>
+          <span class="cmd-shortcut">↗</span>
+        </li>
+        <li class="cmd-item" data-action="minidock">
+          <div class="cmd-item-left">
+            <span>🖥️</span>
+            <span>Launch MINIDOCK macOS App (dock-website-one.vercel.app)</span>
           </div>
           <span class="cmd-shortcut">↗</span>
         </li>
