@@ -41,9 +41,15 @@
     "sameAs": [
       "https://github.com/tenzin67",
       "https://www.linkedin.com/in/tenzin-palgyal/",
-      "https://tibetankeyboard.vercel.app/"
+      "https://tibetankeyboard.vercel.app/",
+      "https://dock-website-one.vercel.app/"
     ],
     "knowsAbout": [
+      "Swift 6",
+      "AppKit",
+      "macOS Systems Engineering",
+      "Mach Kernel APIs",
+      "ScreenCaptureKit",
       "React",
       "PostgreSQL",
       "Laravel",
@@ -93,8 +99,35 @@
           <span id="live-clock">Dharamshala · IST</span>
         </div>
         <a href="#contact" class="btn btn-primary btn-sm button-sm nav-cta-btn">Connect</a>
+        <button type="button" class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-mobile-drawer">
+          <span class="nav-hamburger-line"></span>
+          <span class="nav-hamburger-line"></span>
+          <span class="nav-hamburger-line"></span>
+        </button>
       </div>
     </nav>
+
+    <!-- Mobile Navigation Glass Drawer -->
+    <div id="nav-mobile-drawer" class="nav-mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+      <div class="nav-mobile-inner">
+        <ul class="nav-mobile-links">
+          <li><a href="#work" class="nav-mobile-link"><span class="nav-mobile-icon">📁</span> Work</a></li>
+          <li><a href="#stack" class="nav-mobile-link"><span class="nav-mobile-icon">⚙️</span> Stack</a></li>
+          <li><a href="#narrative" class="nav-mobile-link"><span class="nav-mobile-icon">🏔️</span> Story</a></li>
+          <li><a href="#faq" class="nav-mobile-link"><span class="nav-mobile-icon">💬</span> FAQ</a></li>
+          <li><a href="#contact" class="nav-mobile-link"><span class="nav-mobile-icon">✉️</span> Connect</a></li>
+        </ul>
+        <div class="nav-mobile-footer">
+          <div class="nav-mobile-clock">
+            <span class="status-pulse"></span>
+            <span id="nav-mobile-clock-text">Dharamshala · IST</span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm button-sm" data-copy-email style="width:100%; justify-content:center;">
+            Copy Email
+          </button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <!-- Main Content Container -->
@@ -1121,6 +1154,13 @@
           </div>
           <span class="cmd-shortcut">↗</span>
         </li>
+        <li class="cmd-item" data-action="print">
+          <div class="cmd-item-left">
+            <span>📄</span>
+            <span>Export / Print Institutional CV (PDF)</span>
+          </div>
+          <span class="cmd-shortcut">⌘P</span>
+        </li>
         <li class="cmd-item" data-action="stack">
           <div class="cmd-item-left">
             <span>⚙️</span>
@@ -1160,6 +1200,13 @@
     </svg>
     <span id="toast-message">Copied to clipboard</span>
   </div>
+
+  <!-- FLOATING BACK TO TOP BUTTON -->
+  <button type="button" id="back-to-top" class="back-to-top" aria-label="Scroll back to top" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 
   <!-- Application Logic -->
   <script src="app.js"></script>

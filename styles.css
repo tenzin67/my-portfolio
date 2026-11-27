@@ -476,6 +476,133 @@ body {
   border-radius: var(--radius-full) !important;
 }
 
+/* Mobile Navigation Hamburger Toggle & Glass Drawer */
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-primary);
+  transition: border-color var(--duration-shift) var(--ease-base), background-color var(--duration-shift) var(--ease-base);
+}
+
+.nav-mobile-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.nav-hamburger-line {
+  display: block;
+  width: 14px;
+  height: 1.5px;
+  background-color: currentColor;
+  border-radius: var(--radius-full);
+  transition: transform 250ms var(--ease-base), opacity 200ms ease;
+}
+
+.nav-mobile-toggle.active .nav-hamburger-line:nth-child(1) {
+  transform: translateY(5.5px) rotate(45deg);
+}
+
+.nav-mobile-toggle.active .nav-hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-mobile-toggle.active .nav-hamburger-line:nth-child(3) {
+  transform: translateY(-5.5px) rotate(-45deg);
+}
+
+.nav-mobile-drawer {
+  position: absolute;
+  top: calc(100% + var(--space-75));
+  left: var(--space-200);
+  right: var(--space-200);
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: rgba(19, 18, 9, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  padding: var(--space-200);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.98);
+  transition: opacity 250ms var(--ease-base),
+              transform 250ms var(--ease-base),
+              visibility 250ms var(--ease-base);
+  z-index: 99;
+}
+
+.nav-mobile-drawer.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.nav-mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-100);
+  padding: 10px 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-lg);
+  transition: background-color 150ms var(--ease-base), color 150ms var(--ease-base);
+}
+
+.nav-mobile-link:hover, .nav-mobile-link.active {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-mobile-link.active {
+  color: var(--accent-gold);
+}
+
+.nav-mobile-icon {
+  font-size: 15px;
+}
+
+.nav-mobile-footer {
+  margin-top: var(--space-100);
+  padding-top: var(--space-100);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-100);
+}
+
+.nav-mobile-clock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  padding: 4px 6px;
+}
+
 @keyframes pulse-subtle {
   0% { transform: scale(1); opacity: 0.9; }
   50% { transform: scale(1.3); opacity: 0.4; }
@@ -1186,6 +1313,48 @@ body {
   opacity: 1;
 }
 
+/* Floating Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: var(--space-400);
+  right: var(--space-400);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: rgba(19, 18, 9, 0.88);
+  border: 1px solid var(--border-medium);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 90;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity var(--duration-shift) var(--ease-base),
+              transform var(--duration-shift) var(--ease-base),
+              border-color var(--duration-shift) var(--ease-base),
+              color var(--duration-shift) var(--ease-base),
+              visibility var(--duration-shift) var(--ease-base);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold-border);
+  background: rgba(31, 31, 31, 0.95);
+  transform: translateY(-2px);
+}
+
 /* Responsive Media Queries (Tested strictly at 390px mobile per B10) */
 @media (max-width: 900px) {
   .status-badge {
@@ -1239,6 +1408,10 @@ body {
 
   .nav-links {
     display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: flex;
   }
 
   .proof-strip {
@@ -1301,75 +1474,19 @@ body {
   display: none !important;
 }
 
-/* Audio Toggle Button in Typing Tutor */
-.audio-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-50);
-  background-color: var(--bg-surface-2);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-full);
-  padding: var(--space-25) var(--space-100);
-  font-size: 12px;
-  font-family: var(--font-mono);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all var(--duration-shift) var(--ease-base);
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.audio-toggle-btn:hover {
-  background-color: var(--bg-surface-3);
-  color: var(--text-primary);
-}
-
-.audio-toggle-btn.sound-on {
-  border-color: var(--accent-gold-border);
-  color: var(--accent-gold);
-}
-
-/* Syllable Linguistic Anatomy Inspector */
-.syllable-inspector {
-  display: flex;
-  align-items: center;
-  gap: var(--space-100);
-  padding: var(--space-100) var(--space-200);
-  background-color: var(--bg-surface-2);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  margin-top: var(--space-200);
-  font-size: 12px;
-  flex-wrap: wrap;
-}
-
-.anatomy-label {
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  font-size: 11px;
-}
-
-.anatomy-chips {
-  display: flex;
-  align-items: center;
-  gap: var(--space-50);
-  flex-wrap: wrap;
-}
-
-.anatomy-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background-color: var(--bg-surface-3);
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  color: var(--text-primary);
-}
-
-.anatomy-chip span {
-  font-family: var(--font-tibetan);
-  font-size: 14px;
-  color: var(--accent-gold);
+.project-card:not(.filtered-out) {
+  animation: cardFadeIn 280ms var(--ease-base) forwards;
 }
 
 /* Modal Architecture Blueprint Box */
@@ -1495,6 +1612,21 @@ body {
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
+}
+
+.cmd-empty {
+  padding: var(--space-300) var(--space-200);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  display: none;
+}
+
+.cmd-highlight {
+  background: transparent;
+  color: var(--accent-gold);
+  font-weight: 600;
+  text-decoration: underline;
 }
 
 /* Nangsi MIS Interactive Demo Simulator Styles */
@@ -1736,6 +1868,8 @@ body {
   .toast-notice,
   .cmd-palette-overlay,
   .skip-link,
+  .nav-mobile-drawer,
+  .back-to-top,
   .modal-overlay {
     display: none !important;
   }

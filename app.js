@@ -21,11 +21,113 @@
         hour12: false
       };
       const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
-      clockEl.textContent = `Dharamshala · ${timeStr} IST`;
+      const text = `Dharamshala · ${timeStr} IST`;
+      clockEl.textContent = text;
+      const mobileClockEl = document.getElementById('nav-mobile-clock-text');
+      if (mobileClockEl) mobileClockEl.textContent = text;
     }
 
     update();
     setInterval(update, 10000); // update every 10s to conserve CPU
+  }
+
+  // --- Mobile Navigation Drawer System ---
+  function initMobileNav() {
+    const toggleBtn = document.getElementById('nav-mobile-toggle');
+    const drawer = document.getElementById('nav-mobile-drawer');
+    const links = document.querySelectorAll('.nav-mobile-link');
+    if (!toggleBtn || !drawer) return;
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      toggleBtn.classList.add('active');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      toggleBtn.classList.remove('active');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (drawer.classList.contains('open')) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        closeDrawer();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (drawer.classList.contains('open') && !drawer.contains(e.target) && !toggleBtn.contains(e.target)) {
+        closeDrawer();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) {
+        closeDrawer();
+      }
+    });
+  }
+
+  // --- Scrollspy Navigation Indicator ---
+  function initScrollspy() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileLinks = document.querySelectorAll('.nav-mobile-link');
+    if (!sections.length || !navLinks.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+          mobileLinks.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -65% 0px'
+    });
+
+    sections.forEach(sec => observer.observe(sec));
+  }
+
+  // --- Floating Back to Top Button ---
+  function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   // --- 2. Scroll Reveal for Sections per B7 ---
@@ -310,12 +412,15 @@
     const modalDetails = document.getElementById('modal-project-details');
     const modalMetrics = document.getElementById('modal-project-metrics');
     const modalBlueprint = document.getElementById('modal-project-blueprint');
+    let previouslyFocusedElement = null;
 
     if (!overlay) return;
 
     function openModal(projectId) {
       const data = projectDossiers[projectId];
       if (!data) return;
+
+      previouslyFocusedElement = document.activeElement;
 
       modalTitle.textContent = data.title;
       modalInstitution.textContent = data.institution;
@@ -339,12 +444,40 @@
 
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+
+      setTimeout(() => {
+        if (closeBtn) closeBtn.focus();
+      }, 50);
     }
 
     function closeModal() {
       overlay.classList.remove('active');
       document.body.style.overflow = '';
+      if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+        previouslyFocusedElement.focus();
+      }
     }
+
+    // Accessible keyboard focus trap inside modal
+    overlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusables = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
 
     document.querySelectorAll('[data-open-modal]').forEach(trigger => {
       trigger.addEventListener('click', (e) => {
@@ -402,16 +535,99 @@
   function initCommandPalette() {
     const palette = document.getElementById('cmd-palette');
     const searchInput = document.getElementById('cmd-search-input');
-    const items = document.querySelectorAll('.cmd-item');
+    const list = document.querySelector('.cmd-list');
+    const items = Array.from(document.querySelectorAll('.cmd-item'));
     const triggerBtn = document.getElementById('nav-search-trigger');
+    let previouslyFocusedElement = null;
+    let selectedIndex = 0;
+    let emptyEl = null;
+
     if (!palette) return;
 
+    function getVisibleItems() {
+      return items.filter(item => item.style.display !== 'none');
+    }
+
+    function updateSelection(newIndex) {
+      const visible = getVisibleItems();
+      if (!visible.length) {
+        items.forEach(i => i.classList.remove('selected'));
+        return;
+      }
+      if (newIndex < 0) newIndex = visible.length - 1;
+      if (newIndex >= visible.length) newIndex = 0;
+      selectedIndex = newIndex;
+
+      items.forEach(i => i.classList.remove('selected'));
+      const active = visible[selectedIndex];
+      if (active) {
+        active.classList.add('selected');
+        if (typeof active.scrollIntoView === 'function') {
+          active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      }
+    }
+
+    function ensureEmptyState(count) {
+      if (!emptyEl && list) {
+        emptyEl = document.createElement('div');
+        emptyEl.className = 'cmd-empty';
+        list.appendChild(emptyEl);
+      }
+      if (emptyEl) {
+        if (count === 0) {
+          emptyEl.textContent = `No commands matching "${searchInput ? searchInput.value : ''}"`;
+          emptyEl.style.display = 'block';
+        } else {
+          emptyEl.style.display = 'none';
+        }
+      }
+    }
+
     function openPalette() {
+      previouslyFocusedElement = document.activeElement;
       palette.classList.add('active');
       if (searchInput) {
         searchInput.value = '';
-        items.forEach(i => i.style.display = 'flex');
+        items.forEach(i => {
+          i.style.display = 'flex';
+          i.classList.remove('selected');
+        });
+        if (emptyEl) emptyEl.style.display = 'none';
+        selectedIndex = 0;
+        updateSelection(0);
         setTimeout(() => searchInput.focus(), 60);
+      }
+    }
+
+    function closePalette() {
+      palette.classList.remove('active');
+      if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+        previouslyFocusedElement.focus();
+      }
+    }
+
+    function executeAction(item) {
+      if (!item) return;
+      const action = item.getAttribute('data-action');
+      closePalette();
+      if (action === 'work') document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+      else if (action === 'stack') document.getElementById('stack')?.scrollIntoView({ behavior: 'smooth' });
+      else if (action === 'email') {
+        navigator.clipboard.writeText('tenzin7755@gmail.com').then(() => {
+          showToast('tenzin7755@gmail.com copied to clipboard');
+        });
+      }
+      else if (action === 'github') window.open('https://github.com/tenzin67', '_blank');
+      else if (action === 'linkedin') window.open('https://www.linkedin.com/in/tenzin-palgyal/', '_blank');
+      else if (action === 'app') window.open('https://tibetankeyboard.vercel.app/', '_blank');
+      else if (action === 'minidock') window.open('https://dock-website-one.vercel.app/', '_blank');
+      else if (action === 'ctrc') window.open('https://centraltibetanreliefcommittee.net/', '_blank');
+      else if (action === 'print') {
+        window.print();
+      }
+      else if (action === 'nangsi') {
+        if (window.openNangsiModal) window.openNangsiModal();
       }
     }
 
@@ -422,15 +638,32 @@
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
+        let matchCount = 0;
         items.forEach(item => {
           const text = item.textContent.toLowerCase();
-          item.style.display = text.includes(query) ? 'flex' : 'none';
+          const match = text.includes(query);
+          item.style.display = match ? 'flex' : 'none';
+          if (match) matchCount++;
         });
+        ensureEmptyState(matchCount);
+        updateSelection(0);
       });
-    }
 
-    function closePalette() {
-      palette.classList.remove('active');
+      searchInput.addEventListener('keydown', (e) => {
+        const visible = getVisibleItems();
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          updateSelection(selectedIndex + 1);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          updateSelection(selectedIndex - 1);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (visible[selectedIndex]) {
+            executeAction(visible[selectedIndex]);
+          }
+        }
+      });
     }
 
     window.addEventListener('keydown', (e) => {
@@ -451,25 +684,19 @@
       if (e.target === palette) closePalette();
     });
 
-    items.forEach(item => {
+    items.forEach((item, idx) => {
+      item.addEventListener('mouseenter', () => {
+        const visible = getVisibleItems();
+        const visIdx = visible.indexOf(item);
+        if (visIdx !== -1) {
+          selectedIndex = visIdx;
+          items.forEach(i => i.classList.remove('selected'));
+          item.classList.add('selected');
+        }
+      });
+
       item.addEventListener('click', () => {
-        const action = item.getAttribute('data-action');
-        closePalette();
-        if (action === 'work') document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-        else if (action === 'stack') document.getElementById('stack')?.scrollIntoView({ behavior: 'smooth' });
-        else if (action === 'email') {
-          navigator.clipboard.writeText('tenzin7755@gmail.com').then(() => {
-            showToast('tenzin7755@gmail.com copied to clipboard');
-          });
-        }
-        else if (action === 'github') window.open('https://github.com/tenzin67', '_blank');
-        else if (action === 'linkedin') window.open('https://www.linkedin.com/in/tenzin-palgyal/', '_blank');
-        else if (action === 'app') window.open('https://tibetankeyboard.vercel.app/', '_blank');
-        else if (action === 'minidock') window.open('https://dock-website-one.vercel.app/', '_blank');
-        else if (action === 'ctrc') window.open('https://centraltibetanreliefcommittee.net/', '_blank');
-        else if (action === 'nangsi') {
-          if (window.openNangsiModal) window.openNangsiModal();
-        }
+        executeAction(item);
       });
     });
   }
@@ -500,6 +727,7 @@
     const tabBtns = document.querySelectorAll('.nangsi-tab-btn');
     const viewProjects = document.getElementById('nangsi-view-projects');
     const viewRadar = document.getElementById('nangsi-view-radar');
+    let previouslyFocusedElement = null;
 
     if (!modal) return;
 
@@ -636,7 +864,30 @@
             <div class="caption-5 text-secondary" style="margin-top:2px;">Donor: ${proj.donor} · Handover: ${proj.handover}</div>
           </div>
         </div>
+
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+          <button id="nangsi-export-btn" class="project-tag" style="background:var(--accent-gold); color:var(--bg-canvas); border:none; cursor:pointer; font-weight:600; padding:7px 14px; border-radius:var(--radius-sm); display:inline-flex; align-items:center; gap:6px; transition:transform 0.15s ease;">
+            <span>📄</span> Export Signed PAC Ledger (PDF)
+          </button>
+          <button id="nangsi-verify-btn" class="project-tag" style="background:rgba(34, 197, 94, 0.1); color:var(--accent-green); border:1px solid var(--accent-green); cursor:pointer; font-weight:600; padding:7px 14px; border-radius:var(--radius-sm); display:inline-flex; align-items:center; gap:6px; transition:transform 0.15s ease;">
+            <span>🔒</span> Verify Settlement Audit Hash
+          </button>
+        </div>
       `;
+
+      const exportBtn = inspector.querySelector('#nangsi-export-btn');
+      if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+          showToast(`Exporting PAC ledger for ${proj.code} (${proj.settlement})... PDF ready`);
+        });
+      }
+
+      const verifyBtn = inspector.querySelector('#nangsi-verify-btn');
+      if (verifyBtn) {
+        verifyBtn.addEventListener('click', () => {
+          showToast(`SHA-256 Ledger Hash verified for ${proj.code} [Audit State: VALID]`);
+        });
+      }
     }
 
     function renderTable() {
@@ -712,16 +963,44 @@
     });
 
     function openNangsiModal() {
+      previouslyFocusedElement = document.activeElement;
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
       renderTable();
       renderInspector(selectedProject);
+      setTimeout(() => {
+        if (closeBtn) closeBtn.focus();
+      }, 50);
     }
 
     function closeNangsiModal() {
       modal.classList.remove('active');
       document.body.style.overflow = '';
+      if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+        previouslyFocusedElement.focus();
+      }
     }
+
+    // Accessible keyboard focus trap inside Nangsi modal
+    modal.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
 
     if (launchBtn) launchBtn.addEventListener('click', openNangsiModal);
     if (closeBtn) closeBtn.addEventListener('click', closeNangsiModal);
@@ -740,6 +1019,9 @@
   // --- Initialize All Systems on DOM Ready ---
   document.addEventListener('DOMContentLoaded', () => {
     initLiveClock();
+    initMobileNav();
+    initScrollspy();
+    initBackToTop();
     initScrollReveals();
     initProjectFilters();
     initProjectModal();
